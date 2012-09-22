@@ -52,13 +52,13 @@
   "ok" : 1
 }
 
-db.price.ensureIndex({symbol:1})
+> db.price.ensureIndex({symbol:1})
 
-db.price.aggregate({"$project": {symbol: 1}}, {"$group": {_id: 0, symbols: {"$addToSet": "$symbol"}}});
+> db.price.aggregate({"$project": {symbol: 1}}, {"$group": {_id: 0, symbols: {"$addToSet": "$symbol"}}});
 
 //neither the index nor the project tag sped up this query (more or less the same)
 
-db.price.aggregate({"$project": {symbol: 1}}, {"$group": {_id: "$symbol", counts: {"$sum": 1}}});
+> db.price.aggregate({"$project": {symbol: 1}}, {"$group": {_id: "$symbol", counts: {"$sum": 1}}});
 
 // list counts per symbol in whole collection
 > db.price_from_csv.aggregate({"$project": {symbol: 1}}, {"$group": {_id: "$symbol", counts: {"$sum": 1}}});
